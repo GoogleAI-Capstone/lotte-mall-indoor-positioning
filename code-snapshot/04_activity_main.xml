@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- 구글 맵 프래그먼트 -->
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- 상단 대시보드 (층 상태 및 Brain 비콘 실시간 수신 정보) -->
+    <LinearLayout
+        android:id="@+id/topInfoContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_margin="12dp"
+        android:background="#D9000000"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <TextView
+            android:id="@+id/tvFloorStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="현재 층: 확인 중..."
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvBeaconInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="BLE 스캔 대기 중..."
+            android:textColor="#00FF66"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tvCalibInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="보정 정보"
+            android:textColor="#FFD54F"
+            android:textSize="11sp"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <!-- 실측/축척/각도 보정용 디버그 패널 (기본 숨김, btnDebugToggle로 표시) -->
+    <LinearLayout
+        android:id="@+id/debugPanel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/topInfoContainer"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="12dp"
+        android:background="#D9000000"
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnRotMinus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="0dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:text="회전-" />
+
+            <Button
+                android:id="@+id/btnRotPlus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:minWidth="0dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:text="회전+" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnScaleMinus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="0dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:text="축척-" />
+
+            <Button
+                android:id="@+id/btnScalePlus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:minWidth="0dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:text="축척+" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnToggleSatellite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:minWidth="0dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:text="위성/기본 지도" />
+    </LinearLayout>
+
+    <!-- 디버그(보정) 모드 켜기/끄기 -->
+    <Button
+        android:id="@+id/btnDebugToggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/floorButtonRow"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:minWidth="0dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:text="디버그" />
+
+    <!-- 하단 수동 층 전환 버튼 그룹 (B1, 1층, 2층, 3층) -->
+    <LinearLayout
+        android:id="@+id/floorButtonRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="16dp"
+        android:orientation="horizontal"
+        android:weightSum="4">
+
+        <Button
+            android:id="@+id/btnFloorB1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:layout_weight="1"
+            android:text="B1" />
+
+        <Button
+            android:id="@+id/btnFloor1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:layout_weight="1"
+            android:text="1층" />
+
+        <Button
+            android:id="@+id/btnFloor2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:layout_weight="1"
+            android:text="2층" />
+
+        <Button
+            android:id="@+id/btnFloor3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="3층" />
+
+    </LinearLayout>
+
+</RelativeLayout>
